@@ -1,1 +1,38 @@
+#include <iostream>
+using namespace std;
 
+// creating a node structure
+struct node{
+      int data;
+      struct node *next;
+           };
+
+//Creating a class stackLL
+class stack
+{
+      struct node *top;
+      public:
+      stack() //constructor
+      {
+            top = NUL;
+      }
+      void push(); //to insert an element
+      void pop();  //to delete an element
+      void show(); //to show the stack
+};
+
+//Push operation
+void stack::push()
+{
+  int value;
+  struct node *ptr;
+  cout<< "\n PUSH operation";
+  cout<< "Enter a number to insert: ";
+  cin>> value;
+  ptr = new node;
+  ptr->data = value;
+  ptr->next = NULL;
+  if(top!= NULL){
+                 ptr->next = top;
+                 top = ptr;
+                 }
