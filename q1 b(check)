@@ -1,85 +1,88 @@
-void push();
-int pop();
-void traverse();
-int stack[MAXSIZE];
-int Top=-1;
- 
-int main()
-{
+#include <iostream>
+using namespace std;
+
+struct node{ 
+ //creates a structure
+int data;
+	node *prev;
+};
+
+class queueLL{
+	node *front; 
+ //creates two node type pointers
+	node *rear;
+public:
+	queueLL(){
+ //default constructor
+	front=rear=NULL;
+	}
+	//functions
+	void queue(int data);
+	void leave();
+	void display();
+};
+void queueLL::queue(int data){
+//adds new node at rear of the queue
+	node*temp=new node;
+	temp->data= data;
+	temp->prev=NULL;
+	if(rear==NULL){ //checks if there are any elements in the queue
+		front=temp;
+		rear=temp;
+	}else{
+		rear->prev=temp;  //links the last node to the new node
+		rear=temp;       //points rear at temp
+	}
+}
+
+void queueLL::leave(){ 
+//removes a node from the front of the queue
+	node *temp;
+	temp=front;    //points temp to first node in queue
+	front=front->prev;     //points front to second node in queue
+	delete temp;     //deletes first node
+}
+
+void queueLL::display(){
+	node *temp;
+	temp=front;
+	while(temp!=NULL){ //traverses the queue from front to the rear 
+		cout<<temp->data<<"\t";
+		temp=temp->prev;
+	}
+}
+int main(){
+ queueLL q;
     int choice;
-    char ch;
-    do
+    int x;
+    while(1)//makes a menu
     {
-        printf("n1. PUSH ");
-        printf("n2. POP ");
-        printf("n3. TRAVERSE ");
-        printf("nEnter your choice ");
-        scanf("%d",&choice);
+        cout<<"\n-----------------------------------------------------------";
+        cout<<"\n\t\tQUEUE USING LINKED LIST\n\n";
+        cout<<"1:Queue\n2:Dequeue\n3:DISPLAY STACK\n4:EXIT";
+        cout<<"\nEnter your choice(1-4): ";
+        cin>>choice;
         switch(choice)
         {
-            case 1: push();
+            case 1:
+            	cout << "Enter the number to push:";
+            	cin >> x;
+                q.queue(x);
                 break;
-            case 2: printf("nThe deleted element is %d ",pop());
+            case 2:
+                q.leave();
                 break;
-            case 3: traverse();
+            case 3:
+                q.display();
                 break;
-            default: printf("nYou Entered Wrong Choice");
+            case 4:
+                return 0;
+                break;
+            default:
+                cout<<"\nPlease enter correct choice(1-4)!!";
+                break;
         }
-        printf("nDo You Wish To Continue (Y/N)");
-        fflush(stdin);
-        scanf("%c",&ch);
+
     }
-    while(ch=='Y' || ch=='y');
     return 0;
-}
- 
-void push()
-{
-    int item;
-    if(Top == MAXSIZE - 1)
-    {
-        printf("nThe Stack Is Full");
-        exit(0);
-    }
-    else
-    {
-        printf("Enter the element to be inserted ");
-        scanf("%d",&item);
-        Top= Top+1;
-        stack[Top] = item;
-    }
-}
- 
-int pop()
-{
-    int item;
-    if(Top == -1)
-    {
-        printf("The stack is Empty");
-        exit(0);
-    }
-    else
-    {
-        item = stack[Top];
-        Top = Top-1;
-    }
-    return(item);
-}
- 
-void traverse()
-{
-    int i;
-    if(Top == -1)
-    {
-        printf("The Stack is Empty");
-        exit(0);
-    }
-    else
-    {
-        for(i=Top;i>=0;i--)
-        {
-            printf("Traverse the element ");
-            printf("%dn",stack[i]);
-        }
-    }
 }
